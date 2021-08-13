@@ -2,11 +2,14 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import org.hibernate.Hibernate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.model.Comment;
+import com.example.demo.dto.PostDTO;
+import com.example.demo.dto.PostDTO2;
 import com.example.demo.model.Post;
 import com.example.demo.repository.PostRepository;
 
@@ -22,35 +25,41 @@ public class PostService {
 	public Post save(Post post) {
 		return postRepository.save(post);
 	}
-
-	@Transactional(readOnly = true)
-	public List<Post> findAll() {
-		List<Post> list = postRepository.findAll();
-
-		for (Post post : list) {
-			Hibernate.initialize(post.getComments());
-
-			for (Comment comment : post.getComments()) {
-				Hibernate.initialize(comment.getReplies());
-			}
-		}
-
-		return list;
-	}
-
+	
 	@Transactional(readOnly = true)
 	public Post findPostById(Long id) {
 		return postRepository.findPostById(id);
 	}
 
 	@Transactional(readOnly = true)
-	public List<Post> findPosts() {
-		return postRepository.findPosts();
+	public List<Post> findAll() {
+		return postRepository.findAll();
 	}
 
 	@Transactional(readOnly = true)
-	public Post findPostByTitle(String title) {
-		return postRepository.findPostByTitle(title);
+	public List<Post> findAll2() {
+		return postRepository.findAll2();
+	}
+
+	public Page<Post> findAll3(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return postRepository.findAll3(pageRequest);
+	}
+
+	public Page<PostDTO> findAll4(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return postRepository.findAll4(pageRequest);
+	}
+	
+	
+	@Transactional(readOnly = true)
+	public Page<Post> findAll5(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return postRepository.findAll(pageRequest);
+	}
+
+	public List<PostDTO2> findPostsList() {
+		return postRepository.findPostsList();
 	}
 
 }

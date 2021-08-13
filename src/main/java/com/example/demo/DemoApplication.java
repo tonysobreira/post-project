@@ -54,19 +54,19 @@ public class DemoApplication implements CommandLineRunner {
 
 		postService.save(post1);
 		
-		Post post = postService.findPostById(1L);
-		
-		System.out.println("Title: " + post.getTitle());
-		System.out.println("Content: " + post.getContent());
-
-		for (Comment comment : post.getComments()) {
-			System.out.println("Comment of " + post.getTitle() + " : " + comment.getContent());
-			
-			for (Reply reply : comment.getReplies()) {
-				System.out.println("Reply of " + comment.getContent() + " : " + reply.getContent());
-			}
-				
-		}
+//		Post post = postService.findPostById(1L);
+//		
+//		System.out.println("Title: " + post.getTitle());
+//		System.out.println("Content: " + post.getContent());
+//
+//		for (Comment comment : post.getComments()) {
+//			System.out.println("Comment of " + post.getTitle() + " : " + comment.getContent());
+//			
+//			for (Reply reply : comment.getReplies()) {
+//				System.out.println("Reply of " + comment.getContent() + " : " + reply.getContent());
+//			}
+//				
+//		}
 		
 		
 	}
